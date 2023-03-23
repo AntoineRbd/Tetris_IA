@@ -1,11 +1,31 @@
 import pygame
 
-from src.grid.grid import draw_grid, create_grid, draw_window, init_window
+from src.grid.grid import draw_grid, create_grid, draw_window, init_window, draw_next_shape, clear_rows, draw_text_middle
 from src.pieces.shape import get_shape, convert_shape_format
-from src.rules.game_rule import valid_space, check_lost
+from src.rules.game_rule import valid_space, check_lost, max_score
 
-if __name__ == "__main__":
-    win = init_window()
+
+pygame.font.init()
+
+
+def main_menu(win):
+    running = True
+    
+    while running:
+        win.fill((0, 0, 0))
+        draw_text_middle(win, 'Press Any Key To Play', 60, (255, 255, 255))
+        pygame.display.update()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            if event.type == pygame.KEYDOWN:
+                main(win)
+
+def main(win):
+    score = 0
+    last_score = max_score()
+
+
 
     locked_positions = {}
     grid = create_grid(locked_positions)
@@ -22,8 +42,17 @@ if __name__ == "__main__":
     clock = pygame.time.Clock()
 
     fall_time = 0
+    level_time =  0
 
     while running:
+        level_time += clock.get_rawtime()
+
+        if level_time / 1000 > 5:
+            level_time = 0
+            if level_time > 0.12:
+                level_time -= 0.005
+
+
         fall_speed = 0.27
 
         grid = create_grid(locked_positions)
@@ -73,7 +102,7 @@ if __name__ == "__main__":
                 if y > -1:
                     grid[y][x] = current_piece.color
 
-        # If piece hit the floor 
+        # If piece hit the ground
         if change_piece:
             for pos in shape_pos:
                 p = (pos[0], pos[1])
@@ -81,9 +110,22 @@ if __name__ == "__main__":
             current_piece = next_piece
             next_piece = get_shape()
             change_piece = False
+            score += clear_rows(grid, locked_positions) * 10
 
-        draw_window(grid)
+        draw_window(surface, grid, score, last_score)
+
+        draw_next_shape(next_piece, win)
+        pygame.display.update()
 
         # Check if user lost
         if check_lost(locked_positions):
+            draw_text_middle(win, "YOU LOST !", 80, (255, 255, 255))
+            pygame.display.update()
+            pygame.time.delay(1500)
             running = False
+            update_score(score)
+
+if __name__ == "__main__":
+    win = init_window()
+
+    main_menu(win)

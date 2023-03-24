@@ -24,9 +24,9 @@ if __name__ == "__main__":
     win = init_window()
 
     # Play yourself
-    #main_menu(win)
+    main_menu(win)
 
     # Play IA
-    ia_play(win)
+#ia_play(win)
 
 

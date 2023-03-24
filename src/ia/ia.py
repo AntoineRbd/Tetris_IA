@@ -29,8 +29,10 @@ def ia_play(win):
     fall_time = 0
     level_time =  0
 
+    position_occuped = []
+
     while running:
-        movment = generate_movment(grid, current_piece, next_piece)
+        movment = generate_movment(grid, current_piece, next_piece, position_occuped)
 
         level_time += clock.get_rawtime()
 
@@ -40,7 +42,7 @@ def ia_play(win):
                 level_time -= 0.005
 
 
-        fall_speed = 0.27
+        fall_speed = 0.05
 
         grid = create_grid(locked_positions)
         fall_time += clock.get_rawtime()
@@ -94,6 +96,7 @@ def ia_play(win):
             for pos in shape_pos:
                 p = (pos[0], pos[1])
                 locked_positions[p] = current_piece.color
+                position_occuped.append(p)
             current_piece = next_piece
             next_piece = get_shape()
             change_piece = False

@@ -1,5 +1,7 @@
 import random
 
+global S, Z, I, O, J, L, T
+
 S = [['.....',
       '.....',
       '..00.',

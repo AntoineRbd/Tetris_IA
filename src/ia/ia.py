@@ -32,7 +32,7 @@ def ia_play(win):
     position_occuped = []
 
     while running:
-        movment = generate_movment(grid, current_piece, next_piece, position_occuped)
+        movment = generate_movment(grid, current_piece, next_piece, position_occuped, last_score, locked_positions, clock, change_piece, fall_time, level_time, win, score)
 
         level_time += clock.get_rawtime()
 
@@ -114,4 +114,3 @@ def ia_play(win):
             pygame.time.delay(1500)
             running = False
             update_score(score)
-

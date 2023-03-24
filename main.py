@@ -2,7 +2,7 @@ import pygame
 
 from src.grid.grid import draw_grid, create_grid, draw_window, init_window, draw_next_shape, clear_rows, draw_text_middle
 from src.pieces.shape import get_shape, convert_shape_format
-from src.rules.game_rule import valid_space, check_lost, max_score
+from src.rules.game_rule import valid_space, check_lost, max_score, update_score
 
 
 pygame.font.init()
@@ -112,14 +112,14 @@ def main(win):
             change_piece = False
             score += clear_rows(grid, locked_positions) * 10
 
-        draw_window(surface, grid, score, last_score)
+        draw_window(win, grid, score, last_score)
 
         draw_next_shape(next_piece, win)
         pygame.display.update()
 
         # Check if user lost
         if check_lost(locked_positions):
-            draw_text_middle(win, "YOU LOST !", 80, (255, 255, 255))
+            draw_text_middle(win, "YOU LOST !", 80, (0, 127, 255))
             pygame.display.update()
             pygame.time.delay(1500)
             running = False

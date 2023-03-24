@@ -25,7 +25,7 @@ def update_score(nscore):
     score = max_score()
 
     with open('scores.txt', 'w') as f:
-        if int(score) > nscore:
+        if int(score) > int(nscore):
             f.write(str(score))
         else:
             f.write(str(nscore))

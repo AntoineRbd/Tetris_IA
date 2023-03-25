@@ -32,7 +32,7 @@ def ia_play(win):
     position_occuped = []
 
     while running:
-        movment = generate_movment(grid, current_piece, next_piece, position_occuped, last_score, locked_positions, clock, change_piece, fall_time, level_time, win, score)
+        movment = generate_movment(grid, current_piece, next_piece, position_occuped)
 
         level_time += clock.get_rawtime()
 
@@ -62,6 +62,16 @@ def ia_play(win):
                 running = False
                 pygame.display.quit()
                 quit()
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    pause = True
+                    while pause:
+                        for event in pygame.event.get():
+                            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:    
+                                pause = False
+                                pygame.event.clear()
+                                break
 
         if movment != None:
             if movment == pygame.K_LEFT:

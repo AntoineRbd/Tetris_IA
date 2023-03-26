@@ -32,8 +32,6 @@ def ia_play(win):
     position_occuped = []
 
     while running:
-        movment = generate_movment(grid, current_piece, next_piece, position_occuped)
-
         level_time += clock.get_rawtime()
 
         if level_time / 1000 > 5:
@@ -72,6 +70,8 @@ def ia_play(win):
                                 pause = False
                                 pygame.event.clear()
                                 break
+
+        movment = generate_movment(grid, current_piece, next_piece, position_occuped, change_piece)
 
         if movment != None:
             if movment == pygame.K_LEFT:

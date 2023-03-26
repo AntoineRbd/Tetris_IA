@@ -14,7 +14,7 @@ def generate_movment(grid, current_piece, next_piece, position_occuped):
 
     possible_positions = get_possible_position(current_piece, accepted_positions, position_occuped, grid)
 
-#print(possible_positions)
+    print(possible_positions)
 
 
     pygame.time.delay(100)
@@ -27,14 +27,20 @@ def get_possible_position(current_piece, accepted_positions, position_occuped, g
     for x in range(10):
         y = 19
 
+        # Piece(x_center, y_center, shape)
         test_schape = Piece(x, y, shape)
 
         while not valid_space(test_schape, grid):
             y -= 1
             test_schape = Piece(x, y, shape)
 
-        print(convert_shape_format(test_schape))
-        print('------------')
-        positions_valid.append((x, y))
+        is_valid_pos = True
+
+        for pos in convert_shape_format(test_schape):
+            if pos[0] < 0 or pos[1] < 0:
+                is_valid_pos = False
+
+        if is_valid_pos:
+            positions_valid.append((x, y))
 
     return positions_valid

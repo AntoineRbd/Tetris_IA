@@ -144,5 +144,3 @@ def convert_shape_format(shape):
         positions[i] = (pos[0] - 2, pos[1] - 4)
 
     return positions
-
-
